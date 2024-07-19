@@ -70,3 +70,16 @@ app.delete("/works/:id", (req, res) => {
     res.status(500).json({ error: "not valid id" });
   }
 });
+
+app.patch("/works/:id", (req, res) => {
+  const updates = req.body;
+
+  if (ObjectId.isValid(req.params.id)) {
+    db.collection("Works")
+      .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updates })
+      .then((result) => res.status(200).json(result))
+      .catch((err) => res.status(500).json("couldn't update document"));
+  } else {
+    res.status(500).json({ error: "not valid id" });
+  }
+});
