@@ -1,5 +1,6 @@
 const express = require("express");
 const { connectToDb, getDb } = require("./db");
+const { ObjectId } = require("mongodb");
 const app = express();
 
 let db;
@@ -13,12 +14,11 @@ connectToDb((err) => {
   }
 });
 
-app.get("/works", function (req, res) {
+app.get("/works", (req, res) => {
   let works = [];
 
   db.collection("Works")
     .find()
-    .sort({ title: 1 })
     .forEach((work) => works.push(work))
     .then(() => {
       res.status(200).json(works);
@@ -26,4 +26,17 @@ app.get("/works", function (req, res) {
     .catch(() => {
       res.status(500).json({ error: "couldn't fetch documents" });
     });
+});
+
+app.get("/works/:id", (req, res) => {
+  if (ObjectId.isValid(req.params.id)) {
+    db.collection("Works")
+      .findOne({ _id: new ObjectId(req.params.id) })
+      .then((doc) => res.status(200).json(doc))
+      .catch((err) =>
+        res.status(500).json({ error: "couldn't fetch document" })
+      );
+  } else {
+    res.status(500).json({ error: "not valid id" });
+  }
 });
