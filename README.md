@@ -2,10 +2,10 @@
 
 ```bash
 node --version
-# v18.17.0
+# v20.10.0
 
 npm --version
-# 9.6.7
+# 10.2.3
 ```
 
 Make sure to install the dependencies:

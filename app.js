@@ -18,9 +18,13 @@ connectToDb((err) => {
 
 app.get("/works", (req, res) => {
   let works = [];
+  const worksPerPage = 3;
+  const currentPage = req.query.page || 0;
 
   db.collection("Works")
     .find()
+    .skip(currentPage * worksPerPage)
+    .limit(worksPerPage)
     .forEach((work) => works.push(work))
     .then(() => {
       res.status(200).json(works);
