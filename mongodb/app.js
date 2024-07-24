@@ -21,7 +21,7 @@ app.get("/works", (req, res) => {
   const worksPerPage = 3;
   const currentPage = req.query.page || 0;
 
-  db.collection("Works")
+  db.collection("works")
     .find()
     .skip(currentPage * worksPerPage)
     .limit(worksPerPage)
@@ -36,7 +36,7 @@ app.get("/works", (req, res) => {
 
 app.get("/works/:id", (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("Works")
+    db.collection("works")
       .findOne({ _id: new ObjectId(req.params.id) })
       .then((doc) => res.status(200).json(doc))
       .catch((err) =>
@@ -50,9 +50,9 @@ app.get("/works/:id", (req, res) => {
 app.post("/works", (req, res) => {
   const work = req.body;
 
-  console.log(req);
+  console.log(work);
 
-  db.collection("Works")
+  db.collection("works")
     .insertOne(work)
     .then((result) => {
       res.status(201).json(result);
@@ -64,7 +64,7 @@ app.post("/works", (req, res) => {
 
 app.delete("/works/:id", (req, res) => {
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("Works")
+    db.collection("works")
       .deleteOne({ _id: new ObjectId(req.params.id) })
       .then((result) => res.status(200).json(result))
       .catch((err) =>
@@ -79,7 +79,7 @@ app.patch("/works/:id", (req, res) => {
   const updates = req.body;
 
   if (ObjectId.isValid(req.params.id)) {
-    db.collection("Works")
+    db.collection("works")
       .updateOne({ _id: new ObjectId(req.params.id) }, { $set: updates })
       .then((result) => res.status(200).json(result))
       .catch((err) => res.status(500).json("couldn't update document"));

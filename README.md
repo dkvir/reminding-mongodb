@@ -29,5 +29,5 @@ npm install nodemon -g
 Start the development server on `http://localhost:4000`
 
 ```bash
-nodemon app
+
 ```
