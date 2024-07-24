@@ -29,5 +29,10 @@ npm install nodemon -g
 Start the development server on `http://localhost:4000`
 
 ```bash
+#for mongodb
+npm run mongodb
+
+#for mongoose
+npm run mongoose
 
 ```
